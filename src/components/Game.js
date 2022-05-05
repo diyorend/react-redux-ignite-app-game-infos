@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 //style and animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
+// Redux
+import { useDispatch } from "react-redux";
+import { loadDetail } from "../actions/detailAction";
 
-const Game = ({ name, released, image }) => {
+const Game = ({ name, released, image, id }) => {
+  //Load Detail
+  const dispatch = useDispatch();
+
+  const loadDetailHandler = () => {
+    dispatch(loadDetail(id));
+  };
+
   return (
-    <GameStyled>
-      <h3>{name}</h3>
-      <p>{released}</p>
+    <GameStyled onClick={loadDetailHandler}>
+      <div>
+        <h3>{name}</h3>
+        <p>{released}</p>
+      </div>
       <img src={image} alt={name} />
     </GameStyled>
   );
@@ -23,5 +35,13 @@ const GameStyled = styled(motion.div)`
     width: 100%;
     height: 100%;
   }
+  div {
+    min-height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
+
 export default Game;
